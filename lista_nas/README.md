@@ -10,3 +10,9 @@ We construct a simple DARTS cell as shown below. The model is defined as a gradi
 In this plot, we see the above model chooses to start favoring the Shrinkage operator as early as the 200th epoch of training. As the training continues, we see that the model has confidently learned the Shrinkage operator and thus has replicated ISTA.
 
 ![Results](../images/nas_weights_group.png)
+
+## Usage
+
+1. Clone the repo and install the requirements in your python environment.
+2. Run the training script ```python nas_search.py --job_id 0```
+3. The job_id can be switched between 0 and 1 to see the impact of different learning rates on model training.
