@@ -18,7 +18,7 @@ $$
 Nesterov's scheme uses the current estimate $x^k$ and the previous estimate $x^{k-1}$ to form the momentum. Motivated by this idea, we propose a general parameterization of the momentum term and allow the unrolled network to learn the optimal representation from data.
 
 ### Learned momentum
-Unrolled parameters, $\Theta = \lbrace \theta_i \rbrace$, belong to a general search space and may consist of: (1) gradient step size as one scalar $\alpha$ or as sequence $\lbrace \alpha_k \rbrace _{k=1}^K$ that can remain fixed or change for every iteration. (2) Momentum sequence  $\mathbf{m} = \lbrace \mu_k \rbrace _{k=1}^K$ . (3) Sequence of coefficient $c_i= \lbrace c_k^i \rbrace _{k=1}^K$, to form linear combinations of the history of estimates:  $\mathcal{H}_k(c_i, \lbrace x_i \rbrace) = \sum_{i=0}^{k-1} c_k^i x_i$ , and give a general updating rule:
+Unrolled parameters, $\Theta = \lbrace \theta_i \rbrace$, belong to a general search space and may consist of: (1) gradient step size as one scalar $\alpha$ or as sequence $\lbrace \alpha_k \rbrace _{k=1}^K$ that can remain fixed or change for every iteration. (2) Momentum sequence  $\mathbf{m} = \lbrace \mu_k \rbrace _{k=1}^K$ . (3) Sequence of coefficient $c_i= \lbrace c_k^i \rbrace _{k=1}^K$, to form linear combinations of the history of estimates:  $\mathcal{H}_k (c_i, \lbrace x_i \rbrace ) = \sum_{i=0}^{k-1} c_k^i x_i$ , and give a general updating rule:
 
 $$
 x_{k+1} = x_k + \mathcal{H}_k(c_i, \lbrace x_i \rbrace) - \alpha\nabla\mathcal{L}(x_k+\mathcal{H}_k(c_i, \lbrace x_i \rbrace)).
