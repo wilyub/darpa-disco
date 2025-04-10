@@ -4,7 +4,8 @@ This repository aims to automate the discovery of algorithms through the use of 
 
 We rediscover FISTA by creating sufficiently large DARTS cells and have the model learn operations matching the FISTA algorithm's operations. The main choices to consider are the proximal operator (shrinkage), the gradient's choice for acceleration (momentum), and the number of layers in our model (iterations of the algorithm). 
 
-## **Preconditioning**
+## **Momentum and Preconditioning**
+We also investigated two possible approaches for discovery of acceleration: (1) Add **momentum** terms in the unrolled network, which are equivalent to adding the skip connections in the network. (2) Add a **preconditioning** operator in the forward/adjoint steps.
 
 ## **Shift Varying Systems**
 
