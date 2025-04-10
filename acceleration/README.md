@@ -6,6 +6,7 @@ This repository implements unrolled network frameworks for acceleration algorith
 
 ## Momentum acceleration
 Nesterov's momentum acceleration follows an iterative update scheme given by:
+
 $$
 \begin{aligned}
     &\texttt{Step 1. update momentum: } y^k = x^k + \frac{t_{k-1} - 1}{t_k}(x^k - x^{k-1}), \\
@@ -13,13 +14,16 @@ $$
     &\texttt{Step 3. update step: } t_{k+1} = \frac{1 + \sqrt{1 + 4t_k^2}}{2}.
 \end{aligned}
 $$
+
 Nesterov's scheme uses the current estimate $x^k$ and the previous estimate $x^{k-1}$ to form the momentum. Motivated by this idea, we propose a general parameterization of the momentum term and allow the unrolled network to learn the optimal representation from data.
 
 ### Learned momentum
 Unrolled parameters, $\Theta = \{\theta_i\}$, belong to a general search space and may consist of: (1) gradient step size as one scalar $\alpha$ or as sequence $\{\alpha_k\}_{k=1}^K$ that can remain fixed or change for every iteration. (2) Momentum sequence $\mathbf{m} = \{\mu_k\}_{k=1}^K$. (3) Sequence of coefficient $c_i=\{c_k^i\}_{k=1}^K$, to form linear combinations of the history of estimates: $\mathcal{H}_k(c_i, \{x_i\}) = \sum_{i=0}^{k-1} c_k^i x_i$, and give a general updating rule:
+
 $$
 x_{k+1} = x_k + \mathcal{H}_k(c_i, \{x_i\}) - \alpha\nabla\mathcal{L}(x_k+\mathcal{H}_k(c_i, \{x_i\})).
 $$
+
 By training $\Theta$, we aim to find an optimal way to combine information from previous timesteps, yield an updating rule to solve the target inverse problem effectively and efficiently.
 
 
@@ -29,6 +33,7 @@ Existing preconditioning techniques can be broadly categorized into three types:
 ### Learned preconditioning
 In our experiments, we primarily focused on the left preconditioning. We apply a preconditioner $B$ to transform the system as $Bb=BAx$. This transformation does not change the solution but modifies the path taken by the iterative solver. 
 The iterative update of the original ISTA algorithm applies adjoint operator on the residual as 
+
 $$
 x^{k+1} = \eta_{\theta_k} \left(x^k - \alpha_k A^T(Ax^{k}-b)\right).
 $$
@@ -36,5 +41,7 @@ The modified algorithm would apply preconditioned operator $A^TU$ as
 $$
 x^{k+1} = \eta_{\theta_k} \left(x^k - \alpha_k A^T U (Ax^{k}-b)\right),
 $$
+
 where $U = B^TB$. 
+
 We can learn $U$ within our unrolled network or choose $B$ such that $BA$ has better spectral properties than the given $A$. For instance, we can find $B$ by minimizing $\|I-BA\|$, which yields \textbf{pseudoinverse} of $A$ as the solution (i.e., $B = A^T(AA^T)^{-1}$ and $U = (AA^T)^{-1}$). This choice of $B$ is also equivalent to the row-orthogonalization of the forward operator, which accelerates the convergence by reducing the total number of iterations.
