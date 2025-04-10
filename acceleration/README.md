@@ -18,7 +18,7 @@ $$
 Nesterov's scheme uses the current estimate $x^k$ and the previous estimate $x^{k-1}$ to form the momentum. Motivated by this idea, we propose a general parameterization of the momentum term and allow the unrolled network to learn the optimal representation from data.
 
 ### Learned momentum
-Unrolled parameters, $ \Theta = \{\theta_i\} $, belong to a general search space and may consist of: (1) gradient step size as one scalar $\alpha$ or as sequence $ \{\alpha_k\}_{k=1}^K $ that can remain fixed or change for every iteration. (2) Momentum sequence  $ \mathbf{m} = \{\mu_k\}_{k=1}^K $ . (3) Sequence of coefficient $c_i=\{c_k^i\}_{k=1}^K$, to form linear combinations of the history of estimates:  $ \mathcal{H}_k(c_i, \{x_i\}) = \sum_{i=0}^{k-1} c_k^i x_i $ , and give a general updating rule:
+Unrolled parameters, $\Theta = \{\theta_i\}$, belong to a general search space and may consist of: (1) gradient step size as one scalar $\alpha$ or as sequence $\{\alpha_k\}_{k=1}^K$ that can remain fixed or change for every iteration. (2) Momentum sequence  $\mathbf{m} = \{\mu_k\}_{k=1}^K$ . (3) Sequence of coefficient $c_i=\{c_k^i\}_{k=1}^K$, to form linear combinations of the history of estimates:  $\mathcal{H}_k(c_i, \{x_i\}) = \sum_{i=0}^{k-1} c_k^i x_i$ , and give a general updating rule:
 
 $$
 x_{k+1} = x_k + \mathcal{H}_k(c_i, \{x_i\}) - \alpha\nabla\mathcal{L}(x_k+\mathcal{H}_k(c_i, \{x_i\})).
@@ -28,7 +28,7 @@ By training $\Theta$, we aim to find an optimal way to combine information from 
 
 
 ## Pseudo-inverse preconditioner
-Existing preconditioning techniques can be broadly categorized into three types: (1) **Right preconditioning**,  where a fixed invertible operator $P$ is applied to the right side of system matrix as $b = APP^{-1}x \equiv APu$, where $u=P^{-1}x$). (2) **Left preconditioning**, where a fixed operator $B$ is applied to the left side of the system matrix and measurements as $Bb=BAx$. (3) **Adaptive preconditioning**, where the gradient direction is modified at every iteration of the the gradient. The adaptive preconditioning is further related to methods like BFGS, adaGrad, RMSProp, and ADAM ([Adaptive preconditioning: AdaGrad and ADAM](https://www.mit.edu/~gfarina/2024/67220s24_L13_adagrad/L13.pdf)).
+Existing preconditioning techniques can be broadly categorized into three types: (1) **Right preconditioning**,  where a fixed invertible operator $P$ is applied to the right side of system matrix as $b = APP^{-1}x \equiv APu$, where $u=P^{-1}x$. (2) **Left preconditioning**, where a fixed operator $B$ is applied to the left side of the system matrix and measurements as $Bb=BAx$. (3) **Adaptive preconditioning**, where the gradient direction is modified at every iteration of the the gradient. The adaptive preconditioning is further related to methods like BFGS, adaGrad, RMSProp, and ADAM ([Adaptive preconditioning: AdaGrad and ADAM](https://www.mit.edu/~gfarina/2024/67220s24_L13_adagrad/L13.pdf)).
 
 ### Learned preconditioning
 In our experiments, we primarily focused on the left preconditioning. We apply a preconditioner $B$ to transform the system as $Bb=BAx$. This transformation does not change the solution but modifies the path taken by the iterative solver. 
